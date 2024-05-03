@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Para que no lloren para llenar su excel :v</title>
+    <title>Separador de Texto en Tabla HTML</title>
     <style>
       table {
         border-collapse: collapse;
@@ -23,9 +23,10 @@
   <body>
     <h2>Para que no lloren al llenar su excel :v</h2>
 
-    <textarea id="texto" rows="10" cols="50"> </textarea>
+    <textarea id="texto" rows="10" cols="50"></textarea>
     <br />
     <button onclick="crearTabla()">Crear Tabla</button>
+    <button onclick="copiarTabla()">Copiar Tabla</button>
 
     <div id="tabla"></div>
 
@@ -59,6 +60,38 @@
         tablaHTML += "</table>";
 
         document.getElementById("tabla").innerHTML = tablaHTML;
+      }
+
+      function copiarTabla() {
+        var tablaSinTitulos = document.createElement("table");
+        var tablaExistente = document.querySelector("table");
+        var filas = tablaExistente.querySelectorAll("tr");
+
+        filas.forEach(function (fila, index) {
+          if (index !== 0) {
+            // Excluir la primera fila que contiene los títulos
+            var nuevaFila = tablaSinTitulos.insertRow();
+            var celdas = fila.querySelectorAll("td");
+            celdas.forEach(function (celda) {
+              var nuevaCelda = nuevaFila.insertCell();
+              nuevaCelda.textContent = celda.textContent;
+            });
+          }
+        });
+
+        // Copiar tabla sin títulos al portapapeles
+        var contenedor = document.createElement("div");
+        contenedor.appendChild(tablaSinTitulos);
+        document.body.appendChild(contenedor);
+        var range = document.createRange();
+        range.selectNode(contenedor);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        document.body.removeChild(contenedor);
+        window.getSelection().removeAllRanges();
+
+        alert("La tabla sin títulos se ha copiado al portapapeles.");
       }
     </script>
   </body>
