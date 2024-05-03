@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Para que no lloren para llenar su excel :v</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Para que no lloren al llenar su excel :v</h2>
+
+    <textarea id="texto" rows="10" cols="50"> </textarea>
+    <br />
+    <button onclick="crearTabla()">Crear Tabla</button>
+
+    <div id="tabla"></div>
+
+    <script>
+      function crearTabla() {
+        var texto = document.getElementById("texto").value;
+        var lineas = texto.split("\n");
+        var tablaHTML = "<table>";
+        tablaHTML +=
+          "<tr><th>Tipo de Ficha</th><th>Número de Operación</th><th>Número de Formato</th><th>Fecha</th><th>DNI</th><th>Información Adicional</th></tr>";
+
+        lineas.forEach(function (linea) {
+          var datos = linea.split(" ");
+          // Separar DNI y apellidos si hay un guion
+          if (datos.length > 5) {
+            var dniApellido = datos[4].split("-");
+            datos[4] = dniApellido[0];
+            datos.splice(5, 0, dniApellido[1]);
+          }
+          // Combinar los campos "Apellidos y Nombres" y "Resto de Información" en uno solo
+          var informacionAdicional = datos.slice(5).join(" ");
+          datos = datos.slice(0, 5);
+          datos.push(informacionAdicional);
+          tablaHTML += "<tr>";
+          datos.forEach(function (dato) {
+            tablaHTML += "<td>" + dato + "</td>";
+          });
+          tablaHTML += "</tr>";
+        });
+
+        tablaHTML += "</table>";
+
+        document.getElementById("tabla").innerHTML = tablaHTML;
+      }
+    </script>
+  </body>
+</html>
