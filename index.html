@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <script src="script.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Separador de Texto en Tabla HTML</title>
@@ -22,8 +23,17 @@
   </head>
   <body>
     <h2>Para que no lloren al llenar su excel :v</h2>
-
+    <label for="codigo">Coloque el número de DJ:</label>
+    <input type="text" id="codigo" maxlength="7" />
+    <br />
+    <br />
+    <label for="fecha">Ingrese la fecha de DJ:</label>
+    <input type="date" id="fecha" />
+    <br />
+    <br />
     <textarea id="texto" rows="10" cols="50"></textarea>
+    <br />
+
     <br />
     <button onclick="crearTabla()">Crear Tabla</button>
     <button onclick="copiarTabla()">Copiar Tabla</button>
@@ -33,10 +43,12 @@
     <script>
       function crearTabla() {
         var texto = document.getElementById("texto").value;
+        var codigo = document.getElementById("codigo").value;
+        var fecha = document.getElementById("fecha").value;
         var lineas = texto.split("\n");
         var tablaHTML = "<table>";
         tablaHTML +=
-          "<tr><th>Tipo de Ficha</th><th>Número de Operación</th><th>Número de Formato</th><th>Fecha</th><th>DNI</th><th>Información Adicional</th></tr>";
+          "<tr><th>Tipo de Ficha</th><th>Número de DJ</th><th>Número de Formato</th><th>Fecha de DJ</th><th>DNI</th><th>Información Adicional</th></tr>";
 
         lineas.forEach(function (linea) {
           var datos = linea.split(" ");
@@ -50,6 +62,16 @@
           var informacionAdicional = datos.slice(5).join(" ");
           datos = datos.slice(0, 5);
           datos.push(informacionAdicional);
+          // Insertar el código en la columna "Número de Operación"
+          datos[1] = codigo;
+          // Insertar la fecha en la columna "Fecha de DJ"
+          datos[3] = fecha;
+
+          // Agregar "'" al inicio del DNI si tiene más de 8 caracteres
+          if (datos[4].length > 8) {
+            datos[4] = "'" + datos[4];
+          }
+
           tablaHTML += "<tr>";
           datos.forEach(function (dato) {
             tablaHTML += "<td>" + dato + "</td>";
@@ -61,7 +83,6 @@
 
         document.getElementById("tabla").innerHTML = tablaHTML;
       }
-
       function copiarTabla() {
         var tablaSinTitulos = document.createElement("table");
         var tablaExistente = document.querySelector("table");
@@ -79,19 +100,23 @@
           }
         });
 
-        // Copiar tabla sin títulos al portapapeles
-        var contenedor = document.createElement("div");
-        contenedor.appendChild(tablaSinTitulos);
-        document.body.appendChild(contenedor);
+        // Agregar la tabla al DOM antes de copiarla
+        document.body.appendChild(tablaSinTitulos);
+
+        // Seleccionar la tabla recién agregada
         var range = document.createRange();
-        range.selectNode(contenedor);
+        range.selectNode(tablaSinTitulos);
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
+
+        // Copiar tabla al portapapeles
         document.execCommand("copy");
-        document.body.removeChild(contenedor);
+
+        // Eliminar la tabla del DOM después de copiarla
+        document.body.removeChild(tablaSinTitulos);
         window.getSelection().removeAllRanges();
 
-        alert("La tabla sin títulos se ha copiado al portapapeles.");
+        alert("La tabla se ha copiado");
       }
     </script>
   </body>
