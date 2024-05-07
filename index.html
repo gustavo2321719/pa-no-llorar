@@ -36,6 +36,7 @@
     <br />
     <button onclick="crearTabla()">Crear Tabla</button>
     <button onclick="copiarTabla()">Copiar Tabla</button>
+    <button onclick="ordenarTabla()">Ordenar Tabla</button>
     <br />
     <br />
     <div id="tabla"></div>
@@ -117,6 +118,33 @@
         window.getSelection().removeAllRanges();
 
         alert("La tabla se ha copiado");
+      }
+      function ordenarTabla() {
+        var tablaExistente = document.querySelector("table");
+        var filas = tablaExistente.querySelectorAll("tr");
+
+        filas.forEach(function (fila) {
+          var celdas = fila.querySelectorAll("td");
+
+          // Verificar si hay suficientes celdas en la fila
+          if (celdas.length >= 6) {
+            // Obtener los valores de las celdas
+            var numeroDJ = celdas[1].textContent;
+            var fechaDJ = celdas[3].textContent;
+            var tipoFicha = celdas[0].textContent;
+            var numeroFormato = celdas[2].textContent;
+            var dni = celdas[4].textContent;
+            var informacionAdicional = celdas[5].textContent;
+
+            // Reorganizar las celdas
+            celdas[0].textContent = numeroDJ;
+            celdas[1].textContent = fechaDJ;
+            celdas[2].textContent = tipoFicha;
+            celdas[3].textContent = numeroFormato;
+            celdas[4].textContent = dni;
+            celdas[5].textContent = informacionAdicional;
+          }
+        });
       }
     </script>
   </body>
