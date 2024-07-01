@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="shortcut icon" href="icono.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Separador de Texto en Tabla HTML</title>
+    <title>MATRIZ DE DIGITADORES</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -108,14 +108,11 @@
       ></textarea>
       <br /><br />
       <div class="message">
-        Al presionar el botón "Ordenar Tabla", la información se organizará en
-        pero los titulos de las columnas se desorganizaran, solo esta para
-        copiar y pegar.
+        Ingreso el código de DJ, fecha y consistentes, luego presiona el boton
+        <b>"Crear / Ordenar / Copiar Tabla" </b>
       </div>
       <br /><br />
-      <button onclick="crearTabla()">Crear Tabla</button>
-      <button onclick="ordenarTabla()">Ordenar Tabla</button>
-      <button onclick="copiarTabla()">Copiar Tabla</button>
+      <button onclick="todoEnUno()">Crear / Ordenar / Copiar Tabla</button>
       <br /><br />
       <div id="tabla"></div>
     </div>
@@ -221,6 +218,11 @@
             celdas[5].textContent = informacionAdicional;
           }
         });
+      }
+      function todoEnUno() {
+        crearTabla();
+        ordenarTabla();
+        copiarTabla();
       }
     </script>
   </body>
