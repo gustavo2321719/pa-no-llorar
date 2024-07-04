@@ -113,6 +113,7 @@
       </div>
       <br /><br />
       <button onclick="todoEnUno()">Crear / Ordenar / Copiar Tabla</button>
+      <button onclick="dosEnUno()">Ordenar / Copiar Tabla</button>
       <br /><br />
       <div id="tabla"></div>
     </div>
@@ -221,6 +222,10 @@
       }
       function todoEnUno() {
         crearTabla();
+        ordenarTabla();
+        copiarTabla();
+      }
+      function dosEnUnoo() {
         ordenarTabla();
         copiarTabla();
       }
