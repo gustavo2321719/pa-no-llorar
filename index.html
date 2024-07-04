@@ -218,8 +218,29 @@
             celdas[4].textContent = dni;
             celdas[5].textContent = informacionAdicional;
           }
+          // Verificar si ya existe la columna en blanco
+          if (filas[0].children.length === 7) {
+            console.log("La columna en blanco ya existe. No se agregará otra.");
+            return;
+          }
+
+          // Agregar una nueva columna al encabezado
+          var encabezado = filas[0];
+          var nuevaCeldaEncabezado = document.createElement("th");
+          nuevaCeldaEncabezado.textContent = "VACIO"; // Celda en blanco
+          encabezado.insertBefore(nuevaCeldaEncabezado, encabezado.children[4]);
+
+          // Procesar el resto de las filas
+          for (var i = 1; i < filas.length; i++) {
+            var fila = filas[i];
+
+            // Insertar nueva celda en blanco
+            var nuevaCelda = document.createElement("td");
+            fila.insertBefore(nuevaCelda, fila.children[4]);
+          }
         });
       }
+
       function todoEnUno() {
         crearTabla();
         ordenarTabla();
